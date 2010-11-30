@@ -1,0 +1,102 @@
+body {
+	font-family: arial;
+	font-size: 12px;
+}
+
+ul {
+	padding: 0;
+	margin: 0;
+	width: 300px
+}
+
+li {
+	line-height: 24px;
+	float: left;
+	clear: both;
+	width: 100%
+}
+
+li.track {
+	border-top: 1px solid #cccccc;
+}
+
+li.dashboard {
+	margin-top: 5px;
+	text-align: right;
+}
+
+li img {
+	width: 34px;
+	height: 34px;
+	float: left;
+	margin-right: 8px;
+	border: none;
+}
+
+li.nowplaying {
+	background-color: #fffcca;
+}
+
+div.title,
+div.buttons {
+	float: left;
+}
+
+div.title {
+	width: 213px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+div.buttons {
+	border: 0px solid green;
+	padding: 5px;
+	padding-right: 0;
+	width: 40px;
+	float: right;
+}
+
+div.buttons a {
+	display: block;
+	float: right;
+	height: 12px;
+	padding-right: 5px;
+}
+
+li.dashboard a {
+	clear: both;
+	display: inline-block;
+	color: #0192db;
+	font-weight: bold;
+	text-decoration: none;
+	line-height: 16px;
+	background: url('../images/arrow.png') no-repeat top right transparent;
+	padding-right: 20px;
+}
+
+a.dashboard:hover {
+	text-decoration: underline;
+}
+
+a.nowplaying {
+	width: 12px;
+	background: url('../images/icon_eq.gif') no-repeat 0 0 transparent;
+}
+
+a.love,
+a.unlove {
+	width: 13px;
+	background-image: url('../images/love.png');
+	background-repeat: no-repeat;
+}
+
+a.love:hover,
+a.unlove {
+	background-position: 0 0;
+}
+
+a.love,
+a.unlove:hover {
+	background-position: 0 -20px;
+}

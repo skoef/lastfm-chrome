@@ -1,0 +1,37 @@
+<html>
+<head>
+	<link type="text/css" rel="stylesheet" href="css/options.css">
+	<script type="text/javascript" src="js/mootools.js"></script>
+	<script type="text/javascript" src="js/LocalStorage.js"></script>
+	<script type="text/javascript" src="js/LastFM.Settings.js"></script>
+	<script type="text/javascript">
+		window.addEvent('domready', function(){
+			LastFM.Settings.restore();
+			
+			$('saveButton').addEvent('click', function(){
+				LastFM.Settings.store();
+				try {
+					$('status').set('html', 'Options Saved.');
+					setTimeout(function() {
+						$('status').set('html', '');
+					}, 750);
+				} catch (x){}
+			});
+		});
+	</script>
+</head>
+<body>
+	<img src="images/logo.png" width="64">
+	<h2>Last.FM Chrome extension</h2>
+	
+	<hr>
+	<h3>Credentials</h3>
+	
+	<label>Last.fm username <input type="type" name="username" id="username"></label><br>
+	<label>Last.fm password <input type="password" name="password" id="password"></label><br>
+	
+	<hr class="footer">
+	<button id="saveButton">Save</button>
+	<span id="status"></span>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<html>
+	<head>
+		<link type="text/css" rel="stylesheet" href="css/popup.css">
+		<script type="text/javascript" src="js/mootools.js"></script>
+		<script type="text/javascript" src="js/String.UTF-8.js"></script>
+		<script type="text/javascript" src="js/String.MD5.js"></script>
+		<script type="text/javascript" src="js/LocalStorage.js"></script>
+		<script type="text/javascript" src="js/LastFM.js"></script>
+		<script type="text/javascript" src="js/LastFM.Settings.js"></script>
+		<script type="text/javascript" src="js/LastFM.Track.js"></script>
+		<script type="text/javascript">
+			var lastfm,
+				handleLove = function(oEvent){
+					oEvent.stop();
+					
+					// love
+					if (this.hasClass('love')){
+						// make request
+						this.track.love();
+						// toggle class
+						this.removeClass('love').addClass('unlove');
+					}
+					
+					// unlove
+					else if (this.hasClass('unlove')){
+						// make request
+						this.track.unlove();
+						// toggle class
+						this.removeClass('unlove').addClass('love');
+					}
+				};
+			
+			window.addEvent('load', function(){
+				lastfm = new LastFM();
+				var tracks = lastfm.userGetRecentTracks(),
+					dashboard = new Element('li', {
+						'class': 'dashboard',
+						'html': '<a href="http://last.fm/user/' + lastfm.settings.username + '" target="_blank">Your dashboard</a>'
+					});
+				
+				// add tracks to list
+				tracks.each(function(track){
+					// convert data into LastFM.Track object
+					// get trackinfo
+					track = new LastFM.Track(lastfm, track);
+					// prepare elements
+					var titlestring = track.data.artist.name + ' - ' + track.data.title,
+						li = new Element('li', {
+							'class': 'track'
+						}),
+						img = new Element('img', {
+							'src': 'images/default_artist.png'
+						}),
+						title = new Element('div', {
+							'class': 'title',
+							'title': titlestring,
+							'text': titlestring
+						}),
+						buttons = new Element('div', {
+							'class': 'buttons'
+						}),
+						lovebutton = new Element('a', {
+							'href': '#',
+							'class': (track.data.loved ? 'unlove' : 'love'),
+							'title': (track.data.loved ? 'unlove' : 'love')
+						}),
+						nowplaying;
+					
+					//console.log('track', track, 'trackinfo', trackinfo.data);
+					
+					// img
+					if (track.data.image !== null){
+						img.set('src', track.data.image);
+					}
+					
+					// love button
+					lovebutton.addEvent('click', handleLove);
+					lovebutton.track = track;
+					buttons.adopt(lovebutton);
+					
+					// now playing button
+					if (track.data.nowplaying === true){
+						li.addClass('nowplaying');
+						nowplaying = new Element('a', {
+							'class': 'nowplaying',
+							'title': 'Now playing'
+						});
+						buttons.adopt(nowplaying);
+					}
+					
+					// link elements
+					li.adopt(img).adopt(title).adopt(buttons)
+					
+					// add track to list
+					$('songs').adopt(li);
+				});
+				
+				// add dashboard link
+				$('songs').adopt(dashboard);
+			});
+		</script>
+	</head>
+	<body>
+		<ul id="songs"></ul>
+	</body>
+</html>

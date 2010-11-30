@@ -1,0 +1,45 @@
+<html>
+	<head>
+		<script type="text/javascript" src="js/mootools.js"></script>
+		<script type="text/javascript" src="js/LocalStorage.js"></script>
+		<script type="text/javascript" src="js/String.UTF-8.js"></script>
+		<script type="text/javascript" src="js/String.MD5.js"></script>
+		<script type="text/javascript" src="js/LastFM.js"></script>
+		<script type="text/javascript" src="js/LastFM.Settings.js"></script>
+		<script type="text/javascript">
+			window.addEvent('load', function(){
+				var lastfm = new LastFM();
+				lastfm.login();
+				
+				chrome.extension.onRequest.addListener(function(request, sender, sendResponse){
+					if (!request[0]){
+						console.log('no command');
+						return;
+					}
+					
+					var success = false;
+					
+					switch (request[0]){
+						case 'love':
+							success = lastfm.trackLove(request[1]);
+							break;
+							
+						case 'unlove':
+							success = lastfm.trackUnlove(request[1]);
+							break;
+							
+						case 'ban':
+						case 'unban':
+							break;
+						
+					}
+					
+					sendResponse(success);
+				});
+			});
+		</script>
+	</head>
+	<body>
+		nothing to see here, move along!
+	</body>
+</html>
